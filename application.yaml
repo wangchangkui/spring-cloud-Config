@@ -1,21 +1,13 @@
 spring:
   profiles:
     active: test
-
 ---
 spring:
   profiles: test
   application:
     name: springcloud-config-test
-
-server:
-  port: 8081
-
 ---
 spring:
   profiles: dev
   application:
     name: springcloud-config-dev
-
-server:
-  port: 8082
