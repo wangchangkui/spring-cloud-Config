@@ -1,0 +1,82 @@
+spring:
+  profiles:
+    active: test
+---
+server:
+  port: 8763
+spring:
+  profiles: test
+  application:
+    name: eureka-C1
+eureka:
+  instance:
+    hostname: localhost
+    instance-id: ${eureka.instance.hostname}:${server.port}
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/, http://localhost:8762/eureka/
+
+---
+server:
+  port: 8765
+spring:
+  profiles: dev
+  application:
+    name: Zuul
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/, http://localhost:8762/eureka/
+
+  instance:
+    prefer-ip-address: true #隐藏ID
+    instance-id: localhost:8765
+    ip-address: 127.0.0.1
+zuul:
+  ignored-services: "*" #所有的服务不允许使用原来的路径访问数据 可以是* 匹配全部服务
+                        #之前可以通过当前服务地址+目标服务器id+相关对应的接口 现在加上这个后便不能使用这个访问
+                        #必须使用下面的路由配置访问·
+  routes:
+    #多服务配置
+    c2-service:
+      path: /e2/**
+      serviceId: eureka-c2
+    c1-service:
+      path: /e1/**
+      serviceId: eureka-c1
+  prefix: /myk  #设置一个前缀才能访问
+
+---
+server:
+  port: 8764
+spring:
+  profiles: run
+  application:
+    name: eureka-C2
+eureka:
+  instance:
+    hostname: localhost
+    instance-id: ${eureka.instance.hostname}:${server.port}
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/, http://localhost:8762/eureka/
+    register-with-eureka: true
+    registry-fetch-interval-seconds: 10 #服务拉取时间10s
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: shutdown  #开启端点访问
+  endpoint:
+    shutdown:
+      enabled: true #开始shutdown功能 默认不开器 因为很危险
+
+
+feign:
+  hystrix:
+    enabled: true #开启服务降级
