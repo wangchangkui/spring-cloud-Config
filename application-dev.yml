@@ -19,4 +19,4 @@ eureka:
     # 最后一次心跳间隔多久 会触发注销
     lease-expiration-duration-in-seconds: 90
 key:
-  passwpord: 112233
+  passwpord: 66525
