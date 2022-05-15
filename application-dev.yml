@@ -15,3 +15,5 @@ eureka:
     lease-renewal-interval-in-seconds: 60
     # 最后一次心跳间隔多久 会触发注销
     lease-expiration-duration-in-seconds: 90
+key:
+  passwpord: 123456
