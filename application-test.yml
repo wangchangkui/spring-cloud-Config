@@ -1,2 +1,2 @@
-server:
-  port: 3346
+key:
+  password: 123456
