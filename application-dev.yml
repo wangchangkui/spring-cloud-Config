@@ -1,3 +1,21 @@
 
 server:
   port: 3344
+
+
+eureka:
+  client:
+    service-url:
+      # 注册地址
+      defaultZone: http://eureka7001:7001/eureka,http://eureka7002:7002/eureka
+    fetchRegistry: true
+    register-with-eureka: true
+  instance:
+    # 向注册中心提供别名
+    instance-id: cloud-config-client-3355
+    # 向注册中心暴露ip
+    prefer-ip-address: true
+    # 向注册发送心跳机制的时间
+    lease-renewal-interval-in-seconds: 60
+    # 最后一次心跳间隔多久 会触发注销
+    lease-expiration-duration-in-seconds: 90
