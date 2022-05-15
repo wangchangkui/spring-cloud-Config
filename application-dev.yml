@@ -1,5 +1,5 @@
 server:
-  port: 112233
+  port: 3355
 
 
 eureka:
@@ -19,4 +19,4 @@ eureka:
     # 最后一次心跳间隔多久 会触发注销
     lease-expiration-duration-in-seconds: 90
 key:
-  passwpord: 123456
+  passwpord: 112233
